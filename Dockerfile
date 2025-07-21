@@ -1,7 +1,10 @@
 FROM php:8.1-apache
 
-# Salin semua file ke direktori web server Apache
-COPY . /var/www/html/
+# Install ekstensi mysqli dan modul pendukung
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
-# Aktifkan mod_rewrite jika pakai .htaccess
+# Aktifkan mod_rewrite (opsional jika pakai .htaccess)
 RUN a2enmod rewrite
+
+# Salin semua file project ke dalam container
+COPY . /var/www/html/
